@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="300.0" prefWidth="350.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.Ranking.Ranking">
+   <children>
+      <Text layoutX="152.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PRUEBA " />
+   </children>
+</AnchorPane>
