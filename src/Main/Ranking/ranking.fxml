@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="300.0" prefWidth="350.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.Ranking.Ranking">
+<AnchorPane prefHeight="600.0" prefWidth="350.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.Ranking.Ranking">
    <children>
-      <Text layoutX="152.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PRUEBA " />
+      <TableView fx:id="tablaRanking" layoutX="25.0" layoutY="126.0" prefHeight="460.0" prefWidth="300.0">
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
    </children>
 </AnchorPane>
