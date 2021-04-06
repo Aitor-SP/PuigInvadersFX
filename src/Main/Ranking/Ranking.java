@@ -29,9 +29,8 @@ public class Ranking implements Initializable {
         TableColumn<Item, String> colJugador = new TableColumn<>("JUGADOR");
         TableColumn<Item, String> colPuntuacion = new TableColumn<>("PUNTUACIÓN");
 
-        //AQUI HAY UN ERROR
-//        colJugador.setCellValueFactory(new PropertyValueFactory<Item,String>("JUGADOR"));
-//        colPuntuacion.setCellValueFactory(new PropertyValueFactory<Item,String>("PUNTUACIÓN"));
+        colJugador.setCellValueFactory(new PropertyValueFactory<Item,String>("colJugador"));
+        colPuntuacion.setCellValueFactory(new PropertyValueFactory<Item,String>("colPuntuacion"));
 
         tablaRanking.getColumns().addAll(colJugador,colPuntuacion);
         tablaRanking.setItems(dataTable);
