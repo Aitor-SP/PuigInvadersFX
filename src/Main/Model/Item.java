@@ -1,4 +1,4 @@
-package Main.model;
+package Main.Model;
 
 public class Item {
     private String colJugador;

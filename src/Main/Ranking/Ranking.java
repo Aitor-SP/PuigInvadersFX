@@ -1,6 +1,6 @@
 package Main.Ranking;
 
-import Main.model.Item;
+import Main.Model.Item;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

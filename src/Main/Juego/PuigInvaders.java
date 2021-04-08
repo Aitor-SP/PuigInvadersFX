@@ -116,7 +116,7 @@ public class PuigInvaders extends Application {
         if(gameOver) {
             graphicsContext.setFont(Font.font(35));
             graphicsContext.setFill(Color.YELLOW);
-            graphicsContext.fillText("GAME OVER \n El Puig Castellar ha sido invadido \n Tu puntuación ha sido: "+puntuacion, ANCHO/2, LARGO/2.5);
+            graphicsContext.fillText("GAME OVER \n El Puig Castellar ha sido invadido \n Tu puntuación ha sido: "+puntuacion+" \n Clic para salir", ANCHO/2, LARGO/2.5);
             return;
         }
 
