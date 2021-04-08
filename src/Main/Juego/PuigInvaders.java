@@ -1,9 +1,11 @@
 package Main.Juego;
 
 
+import Main.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
@@ -20,6 +22,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -37,7 +40,7 @@ public class PuigInvaders extends Application {
     static final int EXP_COLUMNAS = 3;
     static final int EXP_STEPS = 15;
 
-    static final Image ENEMIGOS_IMG[] = {
+    static final Image[] ENEMIGOS_IMG = {
             new Image("/Main/resources/enemigo1.png"),
             new Image("/Main/resources/enemigo2.png"),
             new Image("/Main/resources/enemigo3.png"),
@@ -54,19 +57,19 @@ public class PuigInvaders extends Application {
 
     Nave nave;
     List<Disparo> disparoList;
-    List<Universo> universoList;
+    List<Espacio> espacioList;
     List<Enemigos> enemigosList;
 
     private double mouseX;
     private int puntuacion;
 
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         Canvas canvas = new Canvas(ANCHO, LARGO);
         graphicsContext = canvas.getGraphicsContext2D();
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
             try {
                 run(graphicsContext);
-            } catch (IOException ioException) {
+            } catch (IOException | InterruptedException ioException) {
                 ioException.printStackTrace();
             }
         }));
@@ -80,6 +83,10 @@ public class PuigInvaders extends Application {
         canvas.setOnMouseMoved(e -> mouseX = e.getX());
         canvas.setOnMouseClicked(e -> {
             if(disparoList.size() < MAX_DISPAROS) disparoList.add(nave.disparo());
+            if(gameOver) {
+                gameOver = false;
+                Platform.exit();
+            }
         });
         setup();
         stage.setScene(new Scene(new StackPane(canvas)));
@@ -90,7 +97,7 @@ public class PuigInvaders extends Application {
 
     //Cargamos el juego
     private void setup() {
-        universoList = new ArrayList<>();
+        espacioList = new ArrayList<>();
         disparoList = new ArrayList<>();
         enemigosList = new ArrayList<>();
         nave = new Nave(ANCHO / 2, LARGO - PL_TAMANO, PL_TAMANO, PL_IMG);
@@ -98,22 +105,7 @@ public class PuigInvaders extends Application {
         IntStream.range(0, MAX_ENEMIGOS).mapToObj(i -> this.newEnemigo()).forEach(enemigosList::add);
     }
 
-    //Tengo que ver donde lo meto
-    private void dialogo() throws IOException {
-        if (gameOver = true) {
-            Parent root = FXMLLoader.load(getClass().getResource("/Main/Dialogo/dialogo.fxml"));
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
-            stage.getIcons().add(new Image("/Main/resources/icon.png"));
-            stage.setTitle("Puig Invaders FX");
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.show();
-        }
-    }
-
-
-    private void run(GraphicsContext graphicsContext) throws IOException {
+    private void run(GraphicsContext graphicsContext) throws IOException, InterruptedException {
         graphicsContext.setFill(Color.grayRgb(20));
         graphicsContext.fillRect(0, 0, ANCHO, LARGO);
         graphicsContext.setTextAlign(TextAlignment.CENTER);
@@ -121,15 +113,14 @@ public class PuigInvaders extends Application {
         graphicsContext.setFill(Color.YELLOW);
         graphicsContext.fillText("PUNTUACIÓN: <" + puntuacion+">", 100,  20);
 
-        //TODO alert box para guardar la puntuación del jugador y volver al menu principal
         if(gameOver) {
             graphicsContext.setFont(Font.font(35));
             graphicsContext.setFill(Color.YELLOW);
-            graphicsContext.fillText("GAME OVER \n El Puig Castellar ha sido invadido \n Tu puntuación ha sido: "+puntuacion, ANCHO / 2, LARGO /2.5);
+            graphicsContext.fillText("GAME OVER \n El Puig Castellar ha sido invadido \n Tu puntuación ha sido: "+puntuacion, ANCHO/2, LARGO/2.5);
             return;
         }
 
-        universoList.forEach(Universo::dibujar);
+        espacioList.forEach(Espacio::dibujar);
 
         nave.actualizar();
         nave.dibujar();
@@ -169,12 +160,12 @@ public class PuigInvaders extends Application {
         gameOver = nave.destruido;
 
         if(RANDOM.nextInt(10) > 2) {
-            universoList.add(new Universo());
+            espacioList.add(new Espacio());
         }
 
-        for (int i = 0; i < universoList.size(); i++) {
-            if(universoList.get(i).posY > LARGO)
-                universoList.remove(i);
+        for (int i = 0; i < espacioList.size(); i++) {
+            if(espacioList.get(i).posY > LARGO)
+                espacioList.remove(i);
         }
     }
 
@@ -281,13 +272,17 @@ public class PuigInvaders extends Application {
         }
     }
 
-    //Universo
-    public class Universo {
+    //Espacio
+    public class Espacio {
         int posX, posY;
-        private int largo, ancho, r, g, b;
+        private final int largo;
+        private final int ancho;
+        private final int r;
+        private final int g;
+        private final int b;
         private double opacidad;
 
-        public Universo() {
+        public Espacio() {
             posX = RANDOM.nextInt(ANCHO);
             posY = 0;
             ancho = RANDOM.nextInt(5) + 1;

@@ -29,7 +29,7 @@ public class Menu implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
-    public void jugar(ActionEvent actionEvent) throws IOException {
+    public void jugar(ActionEvent actionEvent) {
         switchWindow((Stage)btnJugar.getScene().getWindow(), new PuigInvaders());
     }
 
@@ -43,7 +43,7 @@ public class Menu implements Initializable {
     }
 
     public void ranking(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/Main/Ranking/ranking.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Main/Ranking/ranking.fxml")));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.getIcons().add(new Image("/Main/resources/icon.png"));
@@ -54,7 +54,7 @@ public class Menu implements Initializable {
     }
 
     public void instrucciones(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/Main/Instrucciones/instrucciones.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Main/Instrucciones/instrucciones.fxml")));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.getIcons().add(new Image("/Main/resources/icon.png"));
