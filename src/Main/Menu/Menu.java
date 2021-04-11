@@ -23,24 +23,27 @@ import java.util.ResourceBundle;
 
 public class Menu implements Initializable {
 
-    @FXML private Button btnJugar, btnRanking, btnInstrucciones, btnSalir;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
     public void jugar(ActionEvent actionEvent) {
-        switchWindow((Stage)btnJugar.getScene().getWindow(), new PuigInvaders());
+        PuigInvaders puigInvaders = new PuigInvaders();
+        Stage stage = new Stage();
+        stage.getIcons().add(new Image("/Main/resources/icon.png"));
+        stage.setTitle("Puig Invaders FX");
+        stage.setResizable(false);
+        puigInvaders.start(stage);
     }
 
     //Hace posible el cambio de ventanas
-    public static void switchWindow(Stage window, Application app) {
-        try {
-            app.start(window);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void switchWindow(Stage window, Application app) {
+//        try {
+//            app.start(window);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public void ranking(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Main/Ranking/ranking.fxml")));

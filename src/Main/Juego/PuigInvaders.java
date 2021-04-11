@@ -1,14 +1,10 @@
 package Main.Juego;
 
-
-import Main.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -22,7 +18,6 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -41,13 +36,28 @@ public class PuigInvaders extends Application {
     static final int EXP_STEPS = 15;
 
     static final Image[] ENEMIGOS_IMG = {
-            new Image("/Main/resources/enemigo1.png"),
-            new Image("/Main/resources/enemigo2.png"),
-            new Image("/Main/resources/enemigo3.png"),
-            new Image("/Main/resources/enemigo4.png"),
-            //DLC
-//            new Image("/Main/resources/garriga.png"),
-//            new Image("/Main/resources/yisus.png"),
+            new Image("/Main/resources/ene1.png"),
+            new Image("/Main/resources/ene2.png"),
+            new Image("/Main/resources/ene3.png"),
+            new Image("/Main/resources/ene4.png"),
+            new Image("/Main/resources/ene5.png"),
+            new Image("/Main/resources/ene6.png"),
+            new Image("/Main/resources/ene7.png"),
+            new Image("/Main/resources/ene8.png"),
+            new Image("/Main/resources/ene9.png"),
+            new Image("/Main/resources/ene10.png"),
+            new Image("/Main/resources/ene11.png"),
+            new Image("/Main/resources/ene12.png"),
+            new Image("/Main/resources/ene13.png"),
+            new Image("/Main/resources/ene14.png"),
+            new Image("/Main/resources/ene15.png"),
+            new Image("/Main/resources/ene16.png"),
+            new Image("/Main/resources/ene17.png"),
+            new Image("/Main/resources/ene18.png"),
+            new Image("/Main/resources/ene19.png"),
+            new Image("/Main/resources/ene20.png"),
+            new Image("/Main/resources/ene21.png"),
+            new Image("/Main/resources/ene22.png"),
     };
 
     int MAX_ENEMIGOS = 15;
@@ -85,7 +95,8 @@ public class PuigInvaders extends Application {
             if(disparoList.size() < MAX_DISPAROS) disparoList.add(nave.disparo());
             if(gameOver) {
                 gameOver = false;
-                Platform.exit();
+                //Al clicar después del Game Over cerramos la ventana
+                stage.close();
             }
         });
         setup();
@@ -170,7 +181,7 @@ public class PuigInvaders extends Application {
     }
 
     //Nave del jugador
-    public class Nave {
+    public class Nave{
 
         int posX, posY, tamano;
         boolean explotar, destruido;
@@ -184,14 +195,17 @@ public class PuigInvaders extends Application {
             img = image;
         }
 
+
         public Disparo disparo() {
             return new Disparo(posX + tamano / 2 - Disparo.tamano / 2, posY - Disparo.tamano);
         }
+
 
         public void actualizar() {
             if(explotar) explosionStep++;
             destruido = explosionStep > EXP_STEPS;
         }
+
 
         public void dibujar() {
             if(explotar) {
@@ -204,11 +218,13 @@ public class PuigInvaders extends Application {
             }
         }
 
+
         public boolean colision(Nave other) {
             int d = distancia(this.posX + tamano / 2, this.posY + tamano /2,
                     other.posX + other.tamano / 2, other.posY + other.tamano / 2);
             return d < other.tamano / 2 + this.tamano / 2 ;
         }
+
 
         public void explotado() {
             explotar = true;
@@ -251,12 +267,12 @@ public class PuigInvaders extends Application {
             posY-= velocidad;
         }
 
-
+        //Dibujamos el disparo
         public void dibujar() {
             graphicsContext.setFill(Color.DODGERBLUE);
             if (puntuacion >= 100) {
                 //Aumentamos la dificultad
-                MAX_ENEMIGOS = 25;
+                MAX_ENEMIGOS = 35;
                 graphicsContext.setFill(Color.RED);
                 velocidad = 50;
                 graphicsContext.fillRect(posX-5, posY-10, tamano +10, tamano +30);
@@ -264,7 +280,7 @@ public class PuigInvaders extends Application {
                 graphicsContext.fillOval(posX, posY, tamano, tamano);
             }
         }
-
+        //Detectamos la colision del disparo
         public boolean colision(Nave Nave) {
             int distancia = distancia(this.posX + tamano / 2, this.posY + tamano / 2,
                     Nave.posX + Nave.tamano / 2, Nave.posY + Nave.tamano / 2);
@@ -282,6 +298,7 @@ public class PuigInvaders extends Application {
         private final int b;
         private double opacidad;
 
+        //Creamos el espacio con colores random
         public Espacio() {
             posX = RANDOM.nextInt(ANCHO);
             posY = 0;
@@ -294,7 +311,7 @@ public class PuigInvaders extends Application {
             if(opacidad < 0) opacidad *=-1;
             if(opacidad > 0.5) opacidad = 0.5;
         }
-
+        //Dibujamos el espacio
         public void dibujar() {
             if(opacidad > 0.8) opacidad -=0.01;
             if(opacidad < 0.1) opacidad +=0.01;
@@ -304,10 +321,12 @@ public class PuigInvaders extends Application {
         }
     }
 
+    //Creamos los nuevos enemigos al eliminar otros
     Enemigos newEnemigo() {
         return new Enemigos(50 + RANDOM.nextInt(ANCHO - 100), 0, PL_TAMANO, ENEMIGOS_IMG[RANDOM.nextInt(ENEMIGOS_IMG.length)]);
     }
 
+    //Calcular la distancia para las colisiones
     int distancia(int x1, int y1, int x2, int y2) {
         return (int) Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
     }

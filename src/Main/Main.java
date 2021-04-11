@@ -1,5 +1,6 @@
 package Main;
 
+import Main.Juego.PuigInvaders;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +12,9 @@ import java.util.Objects;
 
 public class Main extends Application {
 
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -19,11 +23,7 @@ public class Main extends Application {
         primaryStage.getIcons().add(new Image("/Main/resources/icon.png"));
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
-        primaryStage.setTitle("Puig Invaders FX");
+        primaryStage.setTitle("Menú principal - Puig Invaders FX");
         primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
