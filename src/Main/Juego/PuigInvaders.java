@@ -73,6 +73,7 @@ public class PuigInvaders extends Application {
     private double mouseX;
     private int puntuacion;
 
+    //Gameloop
     public void start(Stage stage) {
         Canvas canvas = new Canvas(ANCHO, LARGO);
         graphicsContext = canvas.getGraphicsContext2D();
@@ -115,6 +116,7 @@ public class PuigInvaders extends Application {
         puntuacion = 0;
         IntStream.range(0, MAX_ENEMIGOS).mapToObj(i -> this.newEnemigo()).forEach(enemigosList::add);
     }
+
 
     private void run(GraphicsContext graphicsContext) throws IOException, InterruptedException {
         graphicsContext.setFill(Color.grayRgb(20));
