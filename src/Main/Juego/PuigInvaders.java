@@ -124,7 +124,7 @@ public class PuigInvaders extends Application {
         graphicsContext.setTextAlign(TextAlignment.CENTER);
         graphicsContext.setFont(Font.font(20));
         graphicsContext.setFill(Color.YELLOW);
-        graphicsContext.fillText("PUNTUACIÓN: <" + puntuacion+">", 100,  20);
+        graphicsContext.fillText("PUNTUACIÓN: <" + puntuacion+">", 110,  20);
 
         if(gameOver) {
             //Mensaje en pantalla cuando perdemos
@@ -272,13 +272,13 @@ public class PuigInvaders extends Application {
 
         //Dibujamos el disparo
         public void dibujar() {
-            graphicsContext.setFill(Color.DODGERBLUE);
+            graphicsContext.setFill(Color.GOLD);
             if (puntuacion >= 100) {
                 //Aumentamos la dificultad
-                MAX_ENEMIGOS = 35;
+                MAX_ENEMIGOS = 40;
                 graphicsContext.setFill(Color.RED);
                 velocidad = 50;
-                graphicsContext.fillRect(posX-5, posY-10, tamano +10, tamano +30);
+                graphicsContext.fillRect(posX-2, posY-10, tamano +5, tamano +20);
             } else {
                 graphicsContext.fillOval(posX, posY, tamano, tamano);
             }

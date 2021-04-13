@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="PuigInvadersFX">
+    <output-path>$PROJECT_DIR$/out/artifacts/PuigInvadersFX</output-path>
+    <root id="root">
+      <element id="archive" name="PuigInvadersFX.jar">
+        <element id="module-output" name="PuigInvadersFX" />
+      </element>
+    </root>
+  </artifact>
+</component>
